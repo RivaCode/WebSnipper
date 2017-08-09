@@ -35,7 +35,7 @@
 
         </Grid.RowDefinitions>
 
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding Urls}">
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding SiteInfoVm.Urls}">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -81,7 +81,7 @@
                         Width="24" Height="24"
                         Kind="TimerSand" />
                 </Button>
-                
+
             </StackPanel>
 
         </md:PopupBox>

@@ -40,8 +40,13 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.0.823, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.3.0.823\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Optional.3.2.0\lib\net452\Optional.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -57,14 +62,8 @@
     <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -77,6 +76,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business\Interfaces\Persistency\IRepository.cs" />
+    <Compile Include="Business\Interfaces\Persistency\ISiteWatchRepository.cs" />
+    <Compile Include="Business\SiteWatchList\GetSiteWatchListQuery.cs" />
+    <Compile Include="Business\SiteWatchList\ISiteWatchListQuery.cs" />
+    <Compile Include="Business\SiteWatchList\SiteWatchModel.cs" />
+    <Compile Include="Core\ICoreQuery.cs" />
+    <Compile Include="Domain\ValueObject.cs" />
+    <Compile Include="Domain\SiteWatch.cs" />
+    <Compile Include="Persistency\DataProvider.cs" />
+    <Compile Include="Persistency\InMemoryCache.cs" />
+    <Compile Include="Persistency\SiteWatchRepository.cs" />
+    <Compile Include="ViewModels\SiteInfoViewModel.cs" />
     <Compile Include="ViewModels\UrlViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -120,5 +131,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
