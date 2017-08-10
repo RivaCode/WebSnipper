@@ -43,13 +43,10 @@ namespace WebSnipper.UI.Persistency.Json
         private static class PathUtil
         {
             public static string ObtainRoot()
-            {
-                string localAppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string folderPath = $@"{localAppDataFolder}\WebSnipper";
-                if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
-
-                return folderPath;
-            }
+                => Environment
+                    .GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                    .Map(folder => $@"{folder}\WebSnipper")
+                    .Tee(path => path.IfNot(Directory.Exists, p => Directory.CreateDirectory(p)));
         }
 
         private class SiteWatchPersistent
