@@ -5,34 +5,40 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using WebSnipper.UI.Core;
 using WebSnipper.UI.Domain;
 
-namespace WebSnipper.UI.Persistency
+namespace WebSnipper.UI.Persistency.Json
 {
-    public class DataProvider
+    public class JsonDataStore : IDataStore
     {
         private const string SITES = "sites";
 
         private readonly string _rootPath;
         
 
-        public DataProvider()
+        public JsonDataStore()
         {
             _rootPath = Path.Combine(PathUtil.ObtainRoot(), "watcher.json");
         }
 
-        public IObservable<SiteWatch> Get()
-        {
-            return Observable.Using(
+        public IObservable<SiteWatch> GetAll()
+            => Observable
+                .Using(
                     () => new JsonTextReader(
-                        new StreamReader(
-                            new FileStream(_rootPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))),
+                        new StreamReader(new FileStream(_rootPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))),
                     reader => JObject.LoadAsync(reader).ToObservable())
-                .SelectMany(jObj => jObj
-                    .Property(SITES).Values()
-                    .Select(site => site.ToObject<SiteWatchPersistent>())
-                    .Select(swp => SiteWatch.New(swp.Url).ChangeDescription(swp.Description)));
-        }
+                .SelectMany(
+                    jObj => jObj.Property(SITES).Values()
+                        .Select(site => site.ToObject<SiteWatchPersistent>().Map(ReplaceWithSiteWatch())))
+                .SelectMany((watch, index) => Observable.Start(() => watch).Delay(TimeSpan.FromSeconds(index)));
+
+        private Func<SiteWatchPersistent, SiteWatch> ReplaceWithSiteWatch()
+            => persistent =>
+                persistent.Map(watchPersistent =>
+                    SiteWatch
+                        .New(watchPersistent.Url)
+                        .ChangeDescription(watchPersistent.Description));
 
         private static class PathUtil
         {

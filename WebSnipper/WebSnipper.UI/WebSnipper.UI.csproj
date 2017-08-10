@@ -81,10 +81,12 @@
     <Compile Include="Business\SiteWatchList\GetSiteWatchListQuery.cs" />
     <Compile Include="Business\SiteWatchList\ISiteWatchListQuery.cs" />
     <Compile Include="Business\SiteWatchList\SiteWatchModel.cs" />
+    <Compile Include="Core\FunctionalExtensions.cs" />
     <Compile Include="Core\ICoreQuery.cs" />
     <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="Domain\SiteWatch.cs" />
-    <Compile Include="Persistency\DataProvider.cs" />
+    <Compile Include="Persistency\IDataStore.cs" />
+    <Compile Include="Persistency\Json\JsonDataStore.cs" />
     <Compile Include="Persistency\InMemoryCache.cs" />
     <Compile Include="Persistency\SiteWatchRepository.cs" />
     <Compile Include="ViewModels\SiteInfoViewModel.cs" />

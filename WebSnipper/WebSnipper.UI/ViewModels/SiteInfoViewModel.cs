@@ -15,7 +15,7 @@ namespace WebSnipper.UI.ViewModels
 
             siteWatchListQuery
                 .Execute()
-                .SelectMany((model, i) => Observable.Start(() => new UrlViewModel(model)).Delay(TimeSpan.FromSeconds(i+2)))
+                .Select(model => new UrlViewModel(model))
                 .ObserveOnDispatcher()
                 .Subscribe(Urls.Add);
         }

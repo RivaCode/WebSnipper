@@ -4,6 +4,7 @@ using System.Windows.Documents;
 using WebSnipper.UI.Business.SiteWatchList;
 using WebSnipper.UI.Core;
 using WebSnipper.UI.Persistency;
+using WebSnipper.UI.Persistency.Json;
 using WebSnipper.UI.ViewModels;
 
 namespace WebSnipper.UI
@@ -17,7 +18,7 @@ namespace WebSnipper.UI
             SiteInfoVm = new SiteInfoViewModel(
                 new GetSiteWatchListQuery(
                     new SiteWatchRepository(
-                        new DataProvider())));
+                        new JsonDataStore())));
         }
     }
 }

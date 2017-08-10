@@ -8,16 +8,13 @@ namespace WebSnipper.UI.Persistency
 {
     public class SiteWatchRepository : ISiteWatchRepository
     {
-        private readonly DataProvider _provider;
+        private readonly IDataStore _store;
 
-        public SiteWatchRepository(DataProvider provider)
+        public SiteWatchRepository(IDataStore store)
         {
-            _provider = provider;
+            _store = store;
         }
-        public IObservable<SiteWatch> ObserveAll()
-        {
-            return _provider.Get();
-        }
+        public IObservable<SiteWatch> ObserveAll() => _store.GetAll();
 
         public Option<SiteWatch> Get(Guid id)
         {
