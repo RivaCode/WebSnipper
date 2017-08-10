@@ -8,11 +8,7 @@ namespace WebSnipper.UI.Business.SiteWatchList
     {
         private readonly ISiteWatchRepository _siteWatchRepository;
 
-        public GetSiteWatchListQuery(
-            ISiteWatchRepository siteWatchRepository)
-        {
-            _siteWatchRepository = siteWatchRepository;
-        }
+        public GetSiteWatchListQuery(ISiteWatchRepository siteWatchRepository) => _siteWatchRepository = siteWatchRepository;
 
         public IObservable<SiteWatchModel> Execute()
             => _siteWatchRepository

@@ -10,10 +10,8 @@ namespace WebSnipper.UI.Persistency
     {
         private readonly IDataStore _store;
 
-        public SiteWatchRepository(IDataStore store)
-        {
-            _store = store;
-        }
+        public SiteWatchRepository(IDataStore store) => _store = store;
+
         public IObservable<SiteWatch> ObserveAll() => _store.GetAll();
 
         public Option<SiteWatch> Get(Guid id)

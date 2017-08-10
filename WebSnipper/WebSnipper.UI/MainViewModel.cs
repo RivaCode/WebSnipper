@@ -14,11 +14,9 @@ namespace WebSnipper.UI
         public SiteInfoViewModel SiteInfoVm { get; }
 
         public MainViewModel()
-        {
-            SiteInfoVm = new SiteInfoViewModel(
+            => SiteInfoVm = new SiteInfoViewModel(
                 new GetSiteWatchListQuery(
                     new SiteWatchRepository(
                         new JsonDataStore())));
-        }
     }
 }
