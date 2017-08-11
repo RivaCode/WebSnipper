@@ -88,8 +88,8 @@
     <Compile Include="Persistency\IDataStore.cs" />
     <Compile Include="Persistency\Json\JsonDataStore.cs" />
     <Compile Include="Persistency\SiteWatchRepository.cs" />
-    <Compile Include="ViewModels\SiteInfoViewModel.cs" />
-    <Compile Include="ViewModels\UrlViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\SiteInfoViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\UrlViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -5,7 +5,7 @@ using WebSnipper.UI.Business.SiteWatchList;
 using WebSnipper.UI.Core;
 using WebSnipper.UI.Persistency;
 using WebSnipper.UI.Persistency.Json;
-using WebSnipper.UI.ViewModels;
+using WebSnipper.UI.Presentation.ViewModels;
 
 namespace WebSnipper.UI
 {

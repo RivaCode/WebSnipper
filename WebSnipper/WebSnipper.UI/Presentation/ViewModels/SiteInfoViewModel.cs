@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using WebSnipper.UI.Business.SiteWatchList;
 
-namespace WebSnipper.UI.ViewModels
+namespace WebSnipper.UI.Presentation.ViewModels
 {
     public class SiteInfoViewModel
     {

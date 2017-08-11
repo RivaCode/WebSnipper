@@ -1,7 +1,7 @@
 ﻿using WebSnipper.UI.Business.SiteWatchList;
 using WebSnipper.UI.Core;
 
-namespace WebSnipper.UI.ViewModels
+namespace WebSnipper.UI.Presentation.ViewModels
 {
     public class UrlViewModel : NotifyObject
     {
