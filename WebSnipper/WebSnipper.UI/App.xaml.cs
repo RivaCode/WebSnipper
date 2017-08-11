@@ -7,5 +7,6 @@ namespace WebSnipper.UI
     /// </summary>
     public partial class App : Application
     {
+        //test
     }
 }
