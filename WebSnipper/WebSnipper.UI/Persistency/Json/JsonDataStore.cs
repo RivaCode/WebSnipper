@@ -54,7 +54,7 @@ namespace WebSnipper.UI.Persistency.Json
                 persistent.Map(watchPersistent =>
                     SiteWatch
                         .New(watchPersistent.Url)
-                        .ChangeDescription(watchPersistent.Description));
+                        .With(watchPersistent.Description));
 
         private Func<SiteWatch, PresistentItem> ConvertBackFromSiteWatch()
             => siteWatch => new PresistentItem
