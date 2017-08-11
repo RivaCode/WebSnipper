@@ -76,18 +76,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business\Commands\CreateSiteWatch\CreateSiteWatch.cs" />
+    <Compile Include="Business\Commands\CreateSiteWatch\CreateSiteWatchCommand.cs" />
+    <Compile Include="Business\Commands\CreateSiteWatch\ICreateSiteWatchCommand.cs" />
+    <Compile Include="Business\Interfaces\IUrlValidator.cs" />
     <Compile Include="Business\Interfaces\Persistency\IRepository.cs" />
     <Compile Include="Business\Interfaces\Persistency\ISiteWatchRepository.cs" />
-    <Compile Include="Business\SiteWatchList\GetSiteWatchListQuery.cs" />
-    <Compile Include="Business\SiteWatchList\ISiteWatchListQuery.cs" />
-    <Compile Include="Business\SiteWatchList\SiteWatchModel.cs" />
+    <Compile Include="Business\Queries\GetSiteWatch\GetSiteWatchQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatch\IGetSiteWatchQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatch\SiteWatchModel.cs" />
     <Compile Include="Core\FunctionalExtensions.cs" />
+    <Compile Include="Core\ICoreCommand.cs" />
     <Compile Include="Core\ICoreQuery.cs" />
     <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="Domain\SiteWatch.cs" />
+    <Compile Include="Infrastructure\UrlValidator.cs" />
     <Compile Include="Persistency\IDataStore.cs" />
     <Compile Include="Persistency\Json\JsonDataStore.cs" />
     <Compile Include="Persistency\SiteWatchRepository.cs" />
+    <Compile Include="Presentation\BusyViewModel.cs" />
+    <Compile Include="Presentation\Command.cs" />
+    <Compile Include="Presentation\ViewModelExtensions.cs" />
+    <Compile Include="Presentation\ViewModels\NewSiteInfoViewModel.cs" />
     <Compile Include="Presentation\ViewModels\SiteInfoViewModel.cs" />
     <Compile Include="Presentation\ViewModels\UrlViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -132,6 +142,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Business\Commands\DeleteSiteWatch\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using WebSnipper.UI.Business.SiteWatchList;
+﻿using WebSnipper.UI.Business;
+using WebSnipper.UI.Business.Queries;
 using WebSnipper.UI.Core;
 
 namespace WebSnipper.UI.Presentation.ViewModels

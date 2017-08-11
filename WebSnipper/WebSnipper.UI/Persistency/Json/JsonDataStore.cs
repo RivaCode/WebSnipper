@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebSnipper.UI.Core;
@@ -17,29 +18,52 @@ namespace WebSnipper.UI.Persistency.Json
 
         private readonly string _rootPath;
 
-
         public JsonDataStore() => _rootPath = Path.Combine(PathUtil.ObtainStoragePath(), "watcher.json");
 
         public IObservable<SiteWatch> GetAll()
+            => LoadAll().SelectMany(
+                jObj => jObj.Property(SITES)
+                    .Values<PresistentItem>()
+                    .Select(ConvertToSiteWatch()));
+
+        public async Task Save(SiteWatch newSite)
+        {
+            JObject root = await LoadAll();
+            ((JArray)root[SITES]).Add(newSite.Map(ConvertBackFromSiteWatch()));
+
+            await Observable
+                .Using(
+                    () => new JsonTextWriter(new StreamWriter(PathUtil.GetFileStream(_rootPath))),
+                    jtw => root.WriteToAsync(jtw).ToObservable())
+                .ToTask();
+        }
+        
+        private IObservable<JObject> LoadAll()
             => Observable
-                .Using(CreateReader(), jtr => JObject.LoadAsync(jtr).ToObservable())
-                .SelectMany(
-                    jObj => jObj.Property(SITES)
-                        .Values()
-                        .Select(site => site.ToObject<SiteWatchPersistent>().Map(ReplaceWithSiteWatch())))
-                .SelectMany(
-                    (watch, index) => Observable.Start(() => watch).Delay(TimeSpan.FromSeconds(index)));
-
-        private Func<JsonTextReader> CreateReader()
-            => () => new JsonTextReader(
-                     new StreamReader(new FileStream(_rootPath, FileMode.OpenOrCreate, FileAccess.ReadWrite)));
-
-        private Func<SiteWatchPersistent, SiteWatch> ReplaceWithSiteWatch()
+                .Using(
+                    () => new JsonTextReader(new StreamReader(PathUtil.GetFileStream(_rootPath))),
+                    jtr => JObject.LoadAsync(jtr).ToObservable())
+                .SelectMany(jObject =>
+                    Observable.If(
+                        () => jObject.HasValues,
+                        Observable.Start(() => jObject),
+                        Observable.Start(() => jObject.Tee(jObjSelf => jObjSelf.Add(SITES, new JArray())))));
+        
+        private Func<PresistentItem, SiteWatch> ConvertToSiteWatch()
             => persistent =>
                 persistent.Map(watchPersistent =>
                     SiteWatch
                         .New(watchPersistent.Url)
                         .ChangeDescription(watchPersistent.Description));
+
+        private Func<SiteWatch, PresistentItem> ConvertBackFromSiteWatch()
+            => siteWatch => new PresistentItem
+            {
+                Url = siteWatch.Url,
+                Description = siteWatch.Description
+            };
+
+
 
         private static class PathUtil
         {
@@ -48,15 +72,19 @@ namespace WebSnipper.UI.Persistency.Json
                     .GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
                     .Map(folder => $@"{folder}\WebSnipper")
                     .Tee(path => path.IfNot(Directory.Exists, p => Directory.CreateDirectory(p)));
+
+            public static FileStream GetFileStream(string path)
+                => new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
         }
 
         [SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]
         [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-        private class SiteWatchPersistent
+        private class PresistentItem
         {
             public string Url { get; set; }
             public string Description { get; set; }
             public bool IsWatched { get; set; }
+            public DateTime LastScan { get; set; }
         }
     }
 

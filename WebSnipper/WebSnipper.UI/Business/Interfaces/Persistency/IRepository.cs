@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace WebSnipper.UI.Business.Interfaces.Persistency
 {
@@ -6,8 +7,8 @@ namespace WebSnipper.UI.Business.Interfaces.Persistency
     {
         IObservable<T> ObserveAll();
         
-        void Add(T entity);
+        Task AddAsync(T entity);
 
-        void Remove(T entity);
+        Task RemoveAsync(T entity);
     }
 }

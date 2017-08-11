@@ -1,4 +1,4 @@
-﻿namespace WebSnipper.UI.Business.SiteWatchList
+﻿namespace WebSnipper.UI.Business.Queries
 {
     public class SiteWatchModel
     {
