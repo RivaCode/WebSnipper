@@ -82,6 +82,9 @@
     <Compile Include="Business\Interfaces\IUrlValidator.cs" />
     <Compile Include="Business\Interfaces\Persistency\IRepository.cs" />
     <Compile Include="Business\Interfaces\Persistency\ISiteWatchRepository.cs" />
+    <Compile Include="Business\Queries\GetSiteWatchUpdates\GetSiteWatchUpdateQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatchUpdates\IGetSiteWatchUpdatesQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatchUpdates\SiteWatchUpdateModel.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\GetSiteWatchQuery.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\IGetSiteWatchQuery.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\SiteWatchModel.cs" />
