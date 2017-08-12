@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace WebSnipper.UI.Presentation
 {
@@ -21,7 +22,22 @@ namespace WebSnipper.UI.Presentation
         public static IObservable<bool> If<T>(
             this IObservable<T> @src,
             Func<T, bool> ifCondition)
-            => @src.Select(ifCondition).Where(ifTrue => ifTrue);
+            => @src.Select(ifCondition).Where(onlyTrue => onlyTrue);
+
+        public static async Task<Result> SafeInvokeAsync(
+            this BusyViewModel _,
+            Func<Task> toInvoke)
+        {
+            try
+            {
+                await toInvoke();
+                return Result.Ok();
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(e.Message);
+            }
+        }
 
         private static string AsName<T, TProp>(this Expression<Func<T, TProp>> @src)
             => ((MemberExpression) @src.Body).Member.Name;

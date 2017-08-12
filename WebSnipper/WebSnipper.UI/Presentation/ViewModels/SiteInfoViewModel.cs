@@ -23,10 +23,15 @@ namespace WebSnipper.UI.Presentation.ViewModels
                 .Select(model => new UrlViewModel(model))
                 .ObserveOnDispatcher()
                 .Subscribe(Urls.Add);
-            
+
             RemoveCmd = this.ObserveProperty(self => self.Selected)
                 .If(selectedVm => selectedVm != null)
-                .Map(canDelete => Command.Create(canDelete, () => { }));
+                .Map(canDeleteStream =>
+                    Command.Create(canDeleteStream,
+                        () =>
+                        {
+                            Urls.Remove(Selected);
+                        }));
         }
     }
 }

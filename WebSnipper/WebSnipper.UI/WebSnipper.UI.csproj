@@ -99,6 +99,7 @@
     <Compile Include="Persistency\SiteRepository.cs" />
     <Compile Include="Presentation\BusyViewModel.cs" />
     <Compile Include="Presentation\Command.cs" />
+    <Compile Include="Presentation\Result.cs" />
     <Compile Include="Presentation\ViewModelExtensions.cs" />
     <Compile Include="Presentation\ViewModels\NewSiteInfoViewModel.cs" />
     <Compile Include="Presentation\ViewModels\SiteInfoViewModel.cs" />
