@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
@@ -49,7 +48,7 @@ namespace WebSnipper.UI.Persistency.Json
                             () => new JObject(
                                 new JProperty(REFRESH, TimeSpan.FromMinutes(15)),
                                 new JProperty(SITES, new JArray())))
-                        .Delay(TimeSpan.FromSeconds(3))
+                        .Delay(TimeSpan.FromSeconds(3)) //Let the previous resource to be released
                         .Select(jObj =>
                             Observable.Using(
                                 () => new JsonTextWriter(new StreamWriter(PathUtil.GetFileStream(_rootPath))),
@@ -72,7 +71,6 @@ namespace WebSnipper.UI.Persistency.Json
                 LastScan = site.LastWatchTime
             };
                 
-
         private static class PathUtil
         {
             public static string ObtainStoragePath()
@@ -91,8 +89,6 @@ namespace WebSnipper.UI.Persistency.Json
         {
             public string Url { get; set; }
             public string Description { get; set; }
-            [JsonIgnore]
-            public bool IsWatched { get; set; }
             public DateTime LastScan { get; set; }
         }
     }
