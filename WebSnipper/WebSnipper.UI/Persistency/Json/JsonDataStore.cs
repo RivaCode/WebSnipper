@@ -21,14 +21,14 @@ namespace WebSnipper.UI.Persistency.Json
         public JsonDataStore() => _rootPath = Path.Combine(PathUtil.ObtainStoragePath(), "watcher.json");
 
         public IObservable<Site> GetAll()
-            => LoadAll().SelectMany(
-                jObj => jObj.Property(SITES)
-                    .Values<PresistentItem>()
-                    .Select(ConvertToSiteWatch()));
+            => LoadAllAsync().SelectMany(
+                jRoot => jRoot.Property(SITES)
+                    .Values()
+                    .Select(jObj => jObj.ToObject<PresistentItem>().Map(ConvertToSiteWatch())));
 
-        public async Task Save(Site newSite)
+        public async Task SaveAsync(Site newSite)
         {
-            JObject root = await LoadAll();
+            JObject root = await LoadAllAsync();
             ((JArray)root[SITES]).Add(newSite.Map(ConvertBackFromSiteWatch()));
 
             await Observable
@@ -38,24 +38,20 @@ namespace WebSnipper.UI.Persistency.Json
                 .ToTask();
         }
 
-        private IObservable<JObject> LoadAll()
+        private IObservable<JObject> LoadAllAsync()
             => Observable
                 .Using(
                     () => new JsonTextReader(new StreamReader(PathUtil.GetFileStream(_rootPath))),
                     jtr => JObject.LoadAsync(jtr).ToObservable())
-                .SelectMany(jObject =>
-                    Observable.If(
-                        () => jObject.HasValues,
-                        Observable.Start(() => jObject),
-                        Observable.Start(() => jObject.Tee(jObjSelf => jObjSelf.Add(SITES, new JArray())))
-                    )
-                );
-        
+                .Select(jObject =>
+                    jObject.IfNot(
+                        self => self.HasValues,
+                        self => jObject.Add(SITES, new JArray())));
+
         private Func<PresistentItem, Site> ConvertToSiteWatch()
             => persistent =>
                 persistent.Map(watchPersistent =>
-                    Site
-                        .New(watchPersistent.Url)
+                    Site.New(watchPersistent.Url)
                         .With(watchPersistent.Description));
 
         private Func<Site, PresistentItem> ConvertBackFromSiteWatch()
@@ -85,7 +81,9 @@ namespace WebSnipper.UI.Persistency.Json
         {
             public string Url { get; set; }
             public string Description { get; set; }
+            [JsonIgnore]
             public bool IsWatched { get; set; }
+            [JsonIgnore]
             public DateTime LastScan { get; set; }
         }
     }
