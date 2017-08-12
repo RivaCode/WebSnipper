@@ -2,7 +2,7 @@
 
 namespace WebSnipper.UI.Business.Commands
 {
-    public interface ICreateSiteWatchCommand : ICoreCommand<CreateSiteWatch>
+    public interface ICreateSiteCommand : ICoreCommand<CreateSiteModel>
     {
         
     }

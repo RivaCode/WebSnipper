@@ -3,7 +3,7 @@ using WebSnipper.UI.Core;
 
 namespace WebSnipper.UI.Business.Queries
 {
-    public interface IGetSiteWatchQuery : ICoreQuery<IObservable<SiteWatchModel>>
+    public interface IGetSiteQuery : ICoreQuery<IObservable<SiteModel>>
     {
         
     }

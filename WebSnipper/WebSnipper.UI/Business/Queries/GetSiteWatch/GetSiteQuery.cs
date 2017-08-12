@@ -4,20 +4,20 @@ using WebSnipper.UI.Business.Interfaces.Persistency;
 
 namespace WebSnipper.UI.Business.Queries
 {
-    public class GetSiteWatchQuery : IGetSiteWatchQuery
+    public class GetSiteQuery : IGetSiteQuery
     {
-        private readonly ISiteWatchRepository _siteWatchRepository;
+        private readonly ISiteRepository _siteRepository;
 
-        public GetSiteWatchQuery(ISiteWatchRepository siteWatchRepository) 
-            => _siteWatchRepository = siteWatchRepository;
+        public GetSiteQuery(ISiteRepository siteRepository) 
+            => _siteRepository = siteRepository;
 
-        public IObservable<SiteWatchModel> Execute()
-            => _siteWatchRepository
+        public IObservable<SiteModel> Execute()
+            => _siteRepository
                 .ObserveAll()
                 .SelectMany( //Look like lazy loading
                     (siteWatch, index) => Observable.Start(() => siteWatch).Delay(TimeSpan.FromSeconds(index)))
-                .Merge(_siteWatchRepository.SiteWatchAdd)
-                .Select(site => new SiteWatchModel
+                .Merge(_siteRepository.SiteAdded)
+                .Select(site => new SiteModel
                 {
                     Url = site.Url,
                     Description = site.Description

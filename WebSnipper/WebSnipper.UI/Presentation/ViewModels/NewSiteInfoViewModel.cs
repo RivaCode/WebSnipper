@@ -11,7 +11,7 @@ namespace WebSnipper.UI.Presentation.ViewModels
         public IReactiveCommand ApplyCmd { get; }
 
 
-        public NewSiteInfoViewModel(ICreateSiteWatchCommand createSiteWatchCmd)
+        public NewSiteInfoViewModel(ICreateSiteCommand createSiteCmd)
         {
             ApplyCmd = Command.Create(
                 async () =>
@@ -20,7 +20,7 @@ namespace WebSnipper.UI.Presentation.ViewModels
                     {
                         using (StartBusy())
                         {
-                            await createSiteWatchCmd.Execute(new CreateSiteWatch(Url, Description));
+                            await createSiteCmd.Execute(new CreateSiteModel(Url, Description));
                         }
                     }
                     catch (Exception e)

@@ -14,11 +14,11 @@ namespace WebSnipper.UI.Presentation.ViewModels
         public IReactiveCommand RemoveCmd { get; }
 
         public SiteInfoViewModel(
-            IGetSiteWatchQuery siteWatchQuery)
+            IGetSiteQuery siteQuery)
         {
             Urls = new ObservableCollection<UrlViewModel>();
 
-            siteWatchQuery
+            siteQuery
                 .Execute()
                 .Select(model => new UrlViewModel(model))
                 .ObserveOnDispatcher()

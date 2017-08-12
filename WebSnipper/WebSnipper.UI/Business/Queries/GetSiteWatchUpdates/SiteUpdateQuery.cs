@@ -1,8 +1,8 @@
 ﻿namespace WebSnipper.UI.Business.Queries
 {
-    public class GetSiteWatchUpdateQuery : IGetSiteWatchUpdatesQuery
+    public class SiteUpdateQuery : ISiteUpdateQuery
     {
-        public SiteWatchUpdateModel Execute()
+        public SiteUpdateModel Execute()
         {
             throw new System.NotImplementedException();
         }

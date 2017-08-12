@@ -21,7 +21,7 @@ namespace WebSnipper.UI.Presentation.ViewModels
             set => this.SetAndRaise(ref _url, value, NotifyChanged());
         }
 
-        public UrlViewModel(SiteWatchModel model)
+        public UrlViewModel(SiteModel model)
         {
             _description = model.Description;
             _url = model.Url;

@@ -2,7 +2,7 @@
 
 namespace WebSnipper.UI.Business.Queries
 {
-    public interface IGetSiteWatchUpdatesQuery : ICoreQuery<SiteWatchUpdateModel>
+    public interface ISiteUpdateQuery : ICoreQuery<SiteUpdateModel>
     {
         
     }

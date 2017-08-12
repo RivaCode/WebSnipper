@@ -6,24 +6,24 @@ using WebSnipper.UI.Domain;
 
 namespace WebSnipper.UI.Business.Commands
 {
-    public class CreateSiteWatchCommand : ICreateSiteWatchCommand
+    public class CreateSiteCommand : ICreateSiteCommand
     {
-        private readonly ISiteWatchRepository _siteWatchRepository;
+        private readonly ISiteRepository _siteRepository;
         private readonly IUrlValidator _urlValidator;
 
-        public CreateSiteWatchCommand(
-            ISiteWatchRepository siteWatchRepository,
+        public CreateSiteCommand(
+            ISiteRepository siteRepository,
             IUrlValidator urlValidator)
         {
-            _siteWatchRepository = siteWatchRepository;
+            _siteRepository = siteRepository;
             _urlValidator = urlValidator;
         }
 
-        public async Task Execute(CreateSiteWatch entity)
+        public async Task Execute(CreateSiteModel entity)
         {
             await _urlValidator.Validate(entity.Url);
-            await _siteWatchRepository.AddAsync(
-                SiteWatch.New(entity.Url)
+            await _siteRepository.AddAsync(
+                Site.New(entity.Url)
                     .With(entity.Description)
                     .With(DateTime.Now));
         }

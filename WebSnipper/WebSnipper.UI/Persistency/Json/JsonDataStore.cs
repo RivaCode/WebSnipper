@@ -20,13 +20,13 @@ namespace WebSnipper.UI.Persistency.Json
 
         public JsonDataStore() => _rootPath = Path.Combine(PathUtil.ObtainStoragePath(), "watcher.json");
 
-        public IObservable<SiteWatch> GetAll()
+        public IObservable<Site> GetAll()
             => LoadAll().SelectMany(
                 jObj => jObj.Property(SITES)
                     .Values<PresistentItem>()
                     .Select(ConvertToSiteWatch()));
 
-        public async Task Save(SiteWatch newSite)
+        public async Task Save(Site newSite)
         {
             JObject root = await LoadAll();
             ((JArray)root[SITES]).Add(newSite.Map(ConvertBackFromSiteWatch()));
@@ -37,7 +37,7 @@ namespace WebSnipper.UI.Persistency.Json
                     jtw => root.WriteToAsync(jtw).ToObservable())
                 .ToTask();
         }
-        
+
         private IObservable<JObject> LoadAll()
             => Observable
                 .Using(
@@ -47,16 +47,18 @@ namespace WebSnipper.UI.Persistency.Json
                     Observable.If(
                         () => jObject.HasValues,
                         Observable.Start(() => jObject),
-                        Observable.Start(() => jObject.Tee(jObjSelf => jObjSelf.Add(SITES, new JArray())))));
+                        Observable.Start(() => jObject.Tee(jObjSelf => jObjSelf.Add(SITES, new JArray())))
+                    )
+                );
         
-        private Func<PresistentItem, SiteWatch> ConvertToSiteWatch()
+        private Func<PresistentItem, Site> ConvertToSiteWatch()
             => persistent =>
                 persistent.Map(watchPersistent =>
-                    SiteWatch
+                    Site
                         .New(watchPersistent.Url)
                         .With(watchPersistent.Description));
 
-        private Func<SiteWatch, PresistentItem> ConvertBackFromSiteWatch()
+        private Func<Site, PresistentItem> ConvertBackFromSiteWatch()
             => siteWatch => new PresistentItem
             {
                 Url = siteWatch.Url,

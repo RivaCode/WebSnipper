@@ -6,7 +6,7 @@ namespace WebSnipper.UI.Persistency
 {
     public interface IDataStore
     {
-        IObservable<SiteWatch> GetAll();
-        Task Save(SiteWatch newSite);
+        IObservable<Site> GetAll();
+        Task Save(Site newSite);
     }
 }
