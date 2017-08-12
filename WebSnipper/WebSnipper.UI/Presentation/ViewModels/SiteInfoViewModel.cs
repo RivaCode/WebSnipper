@@ -8,15 +8,18 @@ namespace WebSnipper.UI.Presentation.ViewModels
 {
     public class SiteInfoViewModel : NotifyObject
     {
-        public ObservableCollection<UrlViewModel> Urls { get; }
+        public ObservableCollection<IUrlViewModel> Urls { get; }
 
-        public UrlViewModel Selected { get; set; }
+        public IUrlViewModel Selected { get; set; }
         public IReactiveCommand RemoveCmd { get; }
 
         public SiteInfoViewModel(
             IGetSiteQuery siteQuery)
         {
-            Urls = new ObservableCollection<UrlViewModel>();
+            Urls = new ObservableCollection<IUrlViewModel>
+            {
+              new UrlAddViewModel()  
+            };
 
             siteQuery
                 .Execute()

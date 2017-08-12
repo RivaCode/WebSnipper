@@ -13,8 +13,16 @@ namespace WebSnipper.UI.Domain
 
         private Site(string url) => Url = url;
         
-        public Site With(string descr) => New(Url).Tee(watch => watch.Description = descr);
-        public Site With(DateTime lastTime) => New(Url).Tee(watch => watch.LastWatchTime = lastTime);
+        public Site With(string descr) => CreateNew(descr, LastWatchTime);
+        public Site With(DateTime lastTime) => CreateNew(Description, lastTime);
+
+        private Site CreateNew(string descr, DateTime lastTime)
+        {
+            Site site = New(Url);
+            site.Description = descr;
+            site.LastWatchTime = lastTime;
+            return site;
+        }
 
         protected override bool EqualsCore(Site other) => Url.Equals(other.Url);
 

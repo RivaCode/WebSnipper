@@ -10,7 +10,7 @@ namespace WebSnipper.UI.Presentation
     {
         public bool IsBusy { get; private set; }
 
-        protected IDisposable StartBusy()
+        public IDisposable StartBusy()
         {
             IsBusy = true;
             return Disposable.Create(() => IsBusy = false);

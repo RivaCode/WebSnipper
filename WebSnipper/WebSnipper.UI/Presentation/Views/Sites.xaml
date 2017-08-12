@@ -1,0 +1,102 @@
+﻿<UserControl
+    x:Class="WebSnipper.UI.Presentation.Views.Sites"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WebSnipper.UI.Presentation.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:viewModels="clr-namespace:WebSnipper.UI.Presentation.ViewModels"
+    d:DataContext="{d:DesignInstance d:Type={x:Type viewModels:SiteInfoViewModel}}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.HyperLink.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+
+    <Grid>
+
+        <Grid.Resources>
+
+            <Style
+                x:Key="CardStyle"
+                TargetType="{x:Type md:Card}">
+                <Setter Property="Margin" Value="8" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Height" Value="80" />
+            </Style>
+
+            <DataTemplate
+                x:Key="AddCard"
+                DataType="{x:Type viewModels:UrlAddViewModel}">
+
+                <md:Card Style="{StaticResource CardStyle}">
+
+                    <Button
+                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Sites}}, Path=OpenSiteEditorCommand}"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        ToolTip="{Binding Description}">
+                        <md:PackIcon Kind="Plus" />
+                    </Button>
+
+                </md:Card>
+
+            </DataTemplate>
+
+            <DataTemplate
+                x:Key="SiteCard"
+                DataType="{x:Type viewModels:UrlViewModel}">
+
+                <md:Card Style="{StaticResource CardStyle}">
+
+                    <StackPanel>
+                        <TextBlock
+                            Style="{StaticResource MaterialDesignTitleTextBlock}"
+                            Text="{Binding Description}">
+                            <Hyperlink
+                                NavigateUri="{Binding Url}"
+                                Style="{StaticResource MaterialDesignTitleHyperlink}" />
+                        </TextBlock>
+                    </StackPanel>
+
+                </md:Card>
+
+            </DataTemplate>
+
+            <local:SiteDataTemplateSelector
+                x:Key="SiteDataTemplateSelector"
+                AddCard="{StaticResource AddCard}"
+                SiteCard="{StaticResource SiteCard}" />
+
+        </Grid.Resources>
+
+        <ItemsControl
+            ItemTemplateSelector="{StaticResource SiteDataTemplateSelector}"
+            ItemsSource="{Binding Urls}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+        </ItemsControl>
+
+    </Grid>
+
+</UserControl>

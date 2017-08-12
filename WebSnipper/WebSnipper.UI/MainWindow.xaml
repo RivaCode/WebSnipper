@@ -1,14 +1,23 @@
 ﻿<Window
-    x:Class="WebSnipper.UI.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:ui="clr-namespace:WebSnipper.UI" Title="Snipper"
-    Width="525" Height="350"
+    x:Class="WebSnipper.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="clr-namespace:WebSnipper.UI"
+    xmlns:views="clr-namespace:WebSnipper.UI.Presentation.Views"
+    Title="Snipper"
+    Width="525"
+    Height="350"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
-    TextElement.FontSize="13" TextElement.FontWeight="Regular"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-    TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
 
     <Window.DataContext>
@@ -20,70 +29,99 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.HyperLink.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
     </Window.Resources>
 
-    <Grid>
+    <md:DialogHost
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
 
-        <Grid.RowDefinitions>
+        <md:DialogHost.DialogContent>
 
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <StackPanel
+                Margin="16"
+                DataContext="{Binding NewSiteInfoVm}">
 
-        </Grid.RowDefinitions>
+                <TextBox
+                    Margin="0,8,0,0"
+                    HorizontalAlignment="Stretch"
+                    md:HintAssist.Hint="Web page url"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding Url}" />
 
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding SiteInfoVm.Urls}">
+                <TextBox
+                    Margin="0,12,0,0"
+                    HorizontalAlignment="Stretch"
+                    md:HintAssist.Hint="Description"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding Description}" />
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-
-                <DataTemplate>
-                    <md:Card Margin="8" Padding="16">
-                        <StackPanel>
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding Description}">
-                                <Hyperlink NavigateUri="{Binding Url}" Style="{StaticResource MaterialDesignTitleHyperlink}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </md:Card>
-
-                </DataTemplate>
-
-            </ItemsControl.ItemTemplate>
-
-        </ItemsControl>
-
-        <md:PopupBox
-            Grid.Row="1" Margin="10"
-            HorizontalAlignment="Right" VerticalAlignment="Bottom"
-            PlacementMode="LeftAndAlignMiddles"
-            Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-            ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox" ToolTipService.Placement="Right"
-            UnfurlOrientation="Horizontal">
-
-            <StackPanel Orientation="Horizontal">
-                <Button >
-                    <md:PackIcon
-                        Width="24" Height="24"
-                        Kind="Web" />
-                </Button>
-
-                <Button>
-                    <md:PackIcon
-                        Width="24" Height="24"
-                        Kind="TimerSand" />
-                </Button>
+                <Button
+                    Margin="0,12,0,0"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ApplyCmd}"
+                    Content="Save.."
+                    IsDefault="True"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
 
             </StackPanel>
 
-        </md:PopupBox>
-    </Grid>
+        </md:DialogHost.DialogContent>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <md:ColorZone
+                Grid.Row="0"
+                Padding="16"
+                Mode="PrimaryMid">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    Text="Web pages snipper" />
+            </md:ColorZone>
+
+            <views:Sites
+                Grid.Row="1"
+                DataContext="{Binding SiteInfoVm}"
+                OpenSiteEditorCommand="{x:Static md:DialogHost.OpenDialogCommand}" />
+
+            <md:PopupBox
+                Grid.Row="1"
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                PlacementMode="LeftAndAlignMiddles"
+                Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+                ToolTipService.Placement="Right"
+                UnfurlOrientation="Horizontal">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button>
+                        <md:PackIcon
+                            Width="24"
+                            Height="24"
+                            Kind="TimerSand" />
+                    </Button>
+
+                </StackPanel>
+
+            </md:PopupBox>
+
+        </Grid>
+
+    </md:DialogHost>
 
 </Window>

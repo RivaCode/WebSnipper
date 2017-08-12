@@ -96,6 +96,7 @@
     <Compile Include="Infrastructure\UrlValidator.cs" />
     <Compile Include="Persistency\IDataStore.cs" />
     <Compile Include="Persistency\Json\JsonDataStore.cs" />
+    <Compile Include="Persistency\Json\JsonExtensions.cs" />
     <Compile Include="Persistency\SiteRepository.cs" />
     <Compile Include="Presentation\BusyViewModel.cs" />
     <Compile Include="Presentation\Command.cs" />
@@ -103,7 +104,9 @@
     <Compile Include="Presentation\ViewModelExtensions.cs" />
     <Compile Include="Presentation\ViewModels\NewSiteInfoViewModel.cs" />
     <Compile Include="Presentation\ViewModels\SiteInfoViewModel.cs" />
-    <Compile Include="Presentation\ViewModels\UrlViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\Urls\IUrlViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\Urls\UrlAddViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\Urls\UrlViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,8 +121,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Presentation\Views\Sites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presentation\Views\SiteDataTemplateSelector.cs" />
+    <Compile Include="Presentation\Views\Sites.xaml.cs">
+      <DependentUpon>Sites.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

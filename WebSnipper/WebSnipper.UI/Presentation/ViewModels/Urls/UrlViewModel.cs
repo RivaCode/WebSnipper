@@ -1,10 +1,9 @@
-﻿using WebSnipper.UI.Business;
-using WebSnipper.UI.Business.Queries;
+﻿using WebSnipper.UI.Business.Queries;
 using WebSnipper.UI.Core;
 
 namespace WebSnipper.UI.Presentation.ViewModels
 {
-    public class UrlViewModel : NotifyObject
+    public class UrlViewModel : NotifyObject, IUrlViewModel
     {
         private string _description;
         private string _url;

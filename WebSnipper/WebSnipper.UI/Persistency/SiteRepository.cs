@@ -15,7 +15,7 @@ namespace WebSnipper.UI.Persistency
         public SiteRepository(IDataStore store) => _store = store;
 
         public IObservable<Site> SiteAdded => _addSubject.AsObservable();
-        public IObservable<Site> ObserveAll() => _store.GetAll();
+        public IObservable<Site> ObserveAll() => _store.GetAllSites();
 
         public async Task AddAsync(Site entity)
         {

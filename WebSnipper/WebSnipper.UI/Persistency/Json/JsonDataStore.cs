@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
@@ -15,12 +16,13 @@ namespace WebSnipper.UI.Persistency.Json
     public class JsonDataStore : IDataStore
     {
         private const string SITES = "sites";
+        private const string REFRESH = "refresh";
 
         private readonly string _rootPath;
 
         public JsonDataStore() => _rootPath = Path.Combine(PathUtil.ObtainStoragePath(), "watcher.json");
 
-        public IObservable<Site> GetAll()
+        public IObservable<Site> GetAllSites()
             => LoadAllAsync().SelectMany(
                 jRoot => jRoot.Property(SITES)
                     .Values()
@@ -29,39 +31,47 @@ namespace WebSnipper.UI.Persistency.Json
         public async Task SaveAsync(Site newSite)
         {
             JObject root = await LoadAllAsync();
-            ((JArray)root[SITES]).Add(newSite.Map(ConvertBackFromSiteWatch()));
+            ((JArray)root[SITES]).Add(JObject.FromObject(newSite.Map(ConvertBackToPersisten())));
 
-            await Observable
-                .Using(
+            await Observable.Using(
                     () => new JsonTextWriter(new StreamWriter(PathUtil.GetFileStream(_rootPath))),
-                    jtw => root.WriteToAsync(jtw).ToObservable())
+                    jtw => jtw.WriteJson(root))
                 .ToTask();
         }
 
         private IObservable<JObject> LoadAllAsync()
-            => Observable
-                .Using(
+        {
+            return Observable.Using(
                     () => new JsonTextReader(new StreamReader(PathUtil.GetFileStream(_rootPath))),
                     jtr => JObject.LoadAsync(jtr).ToObservable())
-                .Select(jObject =>
-                    jObject.IfNot(
-                        self => self.HasValues,
-                        self => jObject.Add(SITES, new JArray())));
+                .Catch((Exception e) =>
+                    Observable.Start(
+                            () => new JObject(
+                                new JProperty(REFRESH, TimeSpan.FromMinutes(15)),
+                                new JProperty(SITES, new JArray())))
+                        .Delay(TimeSpan.FromSeconds(3))
+                        .Select(jObj =>
+                            Observable.Using(
+                                () => new JsonTextWriter(new StreamWriter(PathUtil.GetFileStream(_rootPath))),
+                                jtw => jtw.WriteJson(jObj).Select(_ => jObj)))
+                        .Switch());
+        }
 
         private Func<PresistentItem, Site> ConvertToSiteWatch()
-            => persistent =>
-                persistent.Map(watchPersistent =>
+            => item =>
+                item.Map(watchPersistent =>
                     Site.New(watchPersistent.Url)
-                        .With(watchPersistent.Description));
+                        .With(watchPersistent.Description)
+                        .With(item.LastScan));
 
-        private Func<Site, PresistentItem> ConvertBackFromSiteWatch()
-            => siteWatch => new PresistentItem
+        private Func<Site, PresistentItem> ConvertBackToPersisten()
+            => site => new PresistentItem
             {
-                Url = siteWatch.Url,
-                Description = siteWatch.Description
+                Url = site.Url,
+                Description = site.Description,
+                LastScan = site.LastWatchTime
             };
-
-
+                
 
         private static class PathUtil
         {
@@ -69,7 +79,7 @@ namespace WebSnipper.UI.Persistency.Json
                 => Environment
                     .GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
                     .Map(folder => $@"{folder}\WebSnipper")
-                    .Tee(path => path.IfNot(Directory.Exists, p => Directory.CreateDirectory(p)));
+                    .Tee(path => path.IfNot(Directory.Exists, p => Directory.CreateDirectory(p).FullName));
 
             public static FileStream GetFileStream(string path)
                 => new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -83,7 +93,6 @@ namespace WebSnipper.UI.Persistency.Json
             public string Description { get; set; }
             [JsonIgnore]
             public bool IsWatched { get; set; }
-            [JsonIgnore]
             public DateTime LastScan { get; set; }
         }
     }
