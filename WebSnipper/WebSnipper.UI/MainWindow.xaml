@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="clr-namespace:WebSnipper.UI"
     xmlns:views="clr-namespace:WebSnipper.UI.Presentation.Views"
     Title="Snipper"
@@ -38,37 +37,58 @@
 
     <md:DialogHost
         HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch">
+        VerticalAlignment="Stretch"
+        IsOpen="{Binding NewSiteInfoVm.CanClose, Mode=OneWay}">
+
+        <md:DialogHost.InputBindings>
+            <KeyBinding
+                Key="Escape"
+                Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+        </md:DialogHost.InputBindings>
 
         <md:DialogHost.DialogContent>
 
-            <StackPanel
+            <Grid Validation.ErrorTemplate="{x:Null}"
+                Width="250"
+                Height="175"
                 Margin="16"
                 DataContext="{Binding NewSiteInfoVm}">
 
-                <TextBox
-                    Margin="0,8,0,0"
-                    HorizontalAlignment="Stretch"
-                    md:HintAssist.Hint="Web page url"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding Url}" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <TextBox
-                    Margin="0,12,0,0"
-                    HorizontalAlignment="Stretch"
-                    md:HintAssist.Hint="Description"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding Description}" />
+                <StackPanel Grid.Row="0">
+
+                    <TextBox
+                        Margin="0,8,0,0"
+                        HorizontalAlignment="Stretch"
+                        md:HintAssist.Hint="Web page url"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding Url}" />
+
+                    <TextBox
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Stretch"
+                        md:HintAssist.Hint="Description"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding Description}" />
+
+                </StackPanel>
+
 
                 <Button
+                    Grid.Row="1"
                     Margin="0,12,0,0"
                     HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
                     Command="{Binding ApplyCmd}"
                     Content="Save.."
                     IsDefault="True"
-                    Style="{StaticResource MaterialDesignFlatButton}" />
+                    Style="{StaticResource MaterialDesignRaisedLightButton}" />
 
-            </StackPanel>
+            </Grid>
 
         </md:DialogHost.DialogContent>
 

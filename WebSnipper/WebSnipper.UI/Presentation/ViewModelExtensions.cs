@@ -22,7 +22,7 @@ namespace WebSnipper.UI.Presentation
         public static IObservable<bool> If<T>(
             this IObservable<T> @src,
             Func<T, bool> ifCondition)
-            => @src.Select(ifCondition).Where(onlyTrue => onlyTrue);
+            => @src.Select(ifCondition);
 
         public static async Task<Result> SafeInvokeAsync(
             this BusyViewModel src,
