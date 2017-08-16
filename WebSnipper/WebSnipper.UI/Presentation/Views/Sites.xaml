@@ -69,7 +69,7 @@
                             Style="{StaticResource MaterialDesignTitleTextBlock}"
                             Text="{Binding Description}">
                             <Hyperlink
-                                NavigateUri="{Binding Url, ValidatesOnNotifyDataErrors=True}"
+                                NavigateUri="{Binding Url}"
                                 Style="{StaticResource MaterialDesignTitleHyperlink}" />
                         </TextBlock>
                     </StackPanel>

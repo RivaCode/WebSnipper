@@ -48,7 +48,7 @@
 
         <md:DialogHost.DialogContent>
 
-            <Grid Validation.ErrorTemplate="{x:Null}"
+            <Grid
                 Width="250"
                 Height="175"
                 Margin="16"
@@ -65,8 +65,17 @@
                         Margin="0,8,0,0"
                         HorizontalAlignment="Stretch"
                         md:HintAssist.Hint="Web page url"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Url}" />
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+
+                        <TextBox.Text>
+                            <Binding Path="Url">
+                                <Binding.ValidationRules>
+                                    <views:UrlValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+
+                    </TextBox>
 
                     <TextBox
                         Margin="0,12,0,0"
