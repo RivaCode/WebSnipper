@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Reactive.Linq;
 using WebSnipper.UI.Business.Commands;
 using WebSnipper.UI.Core;
 
@@ -19,13 +20,14 @@ namespace WebSnipper.UI.Presentation.ViewModels
 
         public string Description { get; set; }
         public IReactiveCommand ApplyCmd { get; }
-        public bool? CanClose => _createResult?.IsSuccess;
+        public bool CanClose => _createResult.IsSuccess;
 
 
         public NewSiteInfoViewModel(ICreateSiteCommand createSiteCmd)
         {
             ApplyCmd = Command.Create(
                 this.ObserveProperty(self => self.Url)
+                    .StartWith(Url)
                     .If(url => !string.IsNullOrWhiteSpace(url)),
                 async () =>
                 {

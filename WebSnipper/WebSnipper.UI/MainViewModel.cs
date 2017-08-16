@@ -10,14 +10,15 @@ namespace WebSnipper.UI
 {
     public class MainViewModel : NotifyObject
     {
-        public SiteInfoViewModel SiteInfoVm { get; }
+        public SitesCatalogViewModel SitesCatalogVm { get; }
         public NewSiteInfoViewModel NewSiteInfoVm { get; }
 
         public MainViewModel()
         {
             var repo = new SiteRepository(new JsonDataStore());
-            SiteInfoVm = new SiteInfoViewModel(
-                new GetSiteQuery(repo));
+            SitesCatalogVm = new SitesCatalogViewModel(
+                new GetSiteQuery(repo),
+                new SiteInfoChangedQuery());
 
             NewSiteInfoVm = new NewSiteInfoViewModel(
                 new CreateSiteCommand(repo, new UrlValidator()));

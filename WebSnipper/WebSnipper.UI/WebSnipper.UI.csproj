@@ -102,8 +102,8 @@
     <Compile Include="Business\Interfaces\IUrlValidator.cs" />
     <Compile Include="Business\Interfaces\Persistency\IRepository.cs" />
     <Compile Include="Business\Interfaces\Persistency\ISiteRepository.cs" />
-    <Compile Include="Business\Queries\GetSiteWatchUpdates\SiteUpdateQuery.cs" />
-    <Compile Include="Business\Queries\GetSiteWatchUpdates\ISiteUpdateQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatchUpdates\SiteInfoChangedQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatchUpdates\ISiteInfoChangedQuery.cs" />
     <Compile Include="Business\Queries\GetSiteWatchUpdates\SiteUpdateModel.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\GetSiteQuery.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\IGetSiteQuery.cs" />
@@ -123,10 +123,11 @@
     <Compile Include="Presentation\Result.cs" />
     <Compile Include="Presentation\ViewModelExtensions.cs" />
     <Compile Include="Presentation\ViewModels\NewSiteInfoViewModel.cs" />
-    <Compile Include="Presentation\ViewModels\SiteInfoViewModel.cs" />
-    <Compile Include="Presentation\ViewModels\Urls\IUrlViewModel.cs" />
-    <Compile Include="Presentation\ViewModels\Urls\UrlAddViewModel.cs" />
-    <Compile Include="Presentation\ViewModels\Urls\UrlViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\SitesCatalogViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\Sites\AddSiteDisplayStrategy.cs" />
+    <Compile Include="Presentation\ViewModels\Sites\EditableSiteDisplayStrategy.cs" />
+    <Compile Include="Presentation\ViewModels\Sites\ISiteDisplayStrategy.cs" />
+    <Compile Include="Presentation\ViewModels\Sites\SiteViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

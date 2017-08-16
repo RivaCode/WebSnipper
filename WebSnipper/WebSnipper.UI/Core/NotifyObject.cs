@@ -14,12 +14,17 @@ namespace WebSnipper.UI.Core
             var handler = PropertyChanged;
             return args => handler?.Invoke(this, args);
         }
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            NotifyChanged()(new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public static class NotifyPropertyChangeExtensions
     {
         public static void SetAndRaise<TValue>(
-            this INotifyPropertyChanged @src,
+            this INotifyPropertyChanged _,
             ref TValue oldFieldValue,
             TValue newFieldValue,
             Action<PropertyChangedEventArgs> raise,

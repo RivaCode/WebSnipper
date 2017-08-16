@@ -122,7 +122,7 @@
 
             <views:Sites
                 Grid.Row="1"
-                DataContext="{Binding SiteInfoVm}"
+                DataContext="{Binding SitesCatalogVm}"
                 OpenSiteEditorCommand="{x:Static md:DialogHost.OpenDialogCommand}" />
 
             <md:PopupBox

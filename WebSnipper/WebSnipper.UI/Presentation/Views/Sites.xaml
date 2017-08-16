@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:viewModels="clr-namespace:WebSnipper.UI.Presentation.ViewModels"
-    d:DataContext="{d:DesignInstance d:Type={x:Type viewModels:SiteInfoViewModel}}"
+    d:DataContext="{d:DesignInstance d:Type={x:Type viewModels:SitesCatalogViewModel}}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -43,7 +43,7 @@
 
             <DataTemplate
                 x:Key="AddCard"
-                DataType="{x:Type viewModels:UrlAddViewModel}">
+                DataType="{x:Type viewModels:SiteViewModel}">
 
                 <md:Card Style="{StaticResource CardStyle}">
 
@@ -60,7 +60,7 @@
 
             <DataTemplate
                 x:Key="SiteCard"
-                DataType="{x:Type viewModels:UrlViewModel}">
+                DataType="{x:Type viewModels:SiteViewModel}">
 
                 <md:Card Style="{StaticResource CardStyle}">
 
