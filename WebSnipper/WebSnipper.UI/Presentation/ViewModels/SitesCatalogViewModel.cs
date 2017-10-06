@@ -31,7 +31,10 @@ namespace WebSnipper.UI.Presentation.ViewModels
                         .FirstOrDefault(urlVm => urlVm.Url == updateModel.Url))
                 .Where(foundVm => foundVm != null)
                 .ObserveOnDispatcher()
-                .Subscribe();
+                .Subscribe(vm =>
+                {
+                    
+                });
 
             siteQuery
                 .Execute()

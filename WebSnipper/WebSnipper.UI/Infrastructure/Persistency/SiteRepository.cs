@@ -19,7 +19,7 @@ namespace WebSnipper.UI.Persistency
 
         public async Task AddAsync(Site entity)
         {
-            await _store.SaveAsync(entity);
+            await _store.SaveSiteAsync(entity);
             _addSubject.OnNext(entity);
         }
 

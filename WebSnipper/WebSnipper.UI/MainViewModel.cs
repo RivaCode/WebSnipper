@@ -15,13 +15,16 @@ namespace WebSnipper.UI
 
         public MainViewModel()
         {
-            var repo = new SiteRepository(new JsonDataStore());
+            var dataStore = new JsonDataStore();
+            var siteRepo = new SiteRepository(dataStore);
+            var metaRepo = new MetadataRepository(dataStore);
+
             SitesCatalogVm = new SitesCatalogViewModel(
-                new GetSiteQuery(repo),
-                new SiteInfoChangedQuery());
+                new GetSiteQuery(siteRepo),
+                new SiteInfoChangedQuery(siteRepo, metaRepo));
 
             NewSiteInfoVm = new NewSiteInfoViewModel(
-                new CreateSiteCommand(repo, new UrlValidator()));
+                new CreateSiteCommand(siteRepo, new UrlValidator()));
         }
     }
 }

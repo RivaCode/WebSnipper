@@ -11,6 +11,7 @@ namespace WebSnipper.UI.Presentation.Views
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
+            return new ValidationResult(true, null);
             if (value == null) return new ValidationResult(true, null);
 
             if (!string.IsNullOrWhiteSpace(value as string))
