@@ -21,7 +21,8 @@ namespace Infrastructure.Repositories
                 .StartAsync(ct =>
                 {
                     var newObject = new JObject(
-                        StoreKey.Settings.ToJProperty(TimeSpan.FromSeconds(15)),
+                        StoreKey.Settings.ToJProperty(
+                            new []{ StoreKey.RefreshRate.ToJProperty(TimeSpan.FromSeconds(15)) }),
                         StoreKey.Sites.ToJProperty(new JArray()));
 
                     return WriteRootAsync(newObject);

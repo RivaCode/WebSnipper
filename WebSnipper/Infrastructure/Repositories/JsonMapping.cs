@@ -7,6 +7,7 @@
 
         public static StoreKey Sites { get; } = new StoreKey("sites");
         public static StoreKey Settings { get; } = new StoreKey("settings");
+        public static StoreKey RefreshRate { get; } = new StoreKey("refresh");
 
         public override bool Equals(object obj) 
             => (obj as StoreKey)?._name.Equals(_name) ?? false;
