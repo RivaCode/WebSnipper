@@ -2,7 +2,6 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Reactive.Linq;
-using WebSnipper.UI.Business.Commands;
 using WebSnipper.UI.Core;
 
 namespace WebSnipper.UI.Presentation.ViewModels
@@ -23,18 +22,15 @@ namespace WebSnipper.UI.Presentation.ViewModels
         public bool CanClose => _createResult.IsSuccess;
 
 
-        public NewSiteInfoViewModel(ICreateSiteCommand createSiteCmd)
+        public NewSiteInfoViewModel()
         {
             ApplyCmd = Command.Create(
                 this.ObserveProperty(self => self.Url)
                     .StartWith(Url)
                     .If(url => !string.IsNullOrWhiteSpace(url)),
-                async () =>
+                () =>
                 {
-                    _createResult = await this.SafeInvokeAsync(
-                        () => createSiteCmd.Execute(new CreateSiteModel(Url, Description)));
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(Url)));
-                    NotifyChanged()(new PropertyChangedEventArgs(nameof(CanClose)));
+      
                 });
         }
 

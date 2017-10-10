@@ -1,9 +1,8 @@
-﻿using WebSnipper.UI.Business.Commands;
-using WebSnipper.UI.Business.Queries;
+﻿using Autofac;
+using Domain;
+using Domain.Business;
+using Infrastructure;
 using WebSnipper.UI.Core;
-using WebSnipper.UI.Infrastructure;
-using WebSnipper.UI.Persistency;
-using WebSnipper.UI.Persistency.Json;
 using WebSnipper.UI.Presentation.ViewModels;
 
 namespace WebSnipper.UI
@@ -15,16 +14,15 @@ namespace WebSnipper.UI
 
         public MainViewModel()
         {
-            var dataStore = new JsonDataStore();
-            var siteRepo = new SiteRepository(dataStore);
-            var metaRepo = new MetadataRepository(dataStore);
+            ContainerBuilder cb = new ContainerBuilder();
+            cb.RegisterModule<InfrastructureModule>();
+            cb.RegisterModule<DomainModule>();
+
+            var container = cb.Build();
 
             SitesCatalogVm = new SitesCatalogViewModel(
-                new GetSiteQuery(siteRepo),
-                new SiteInfoChangedQuery(siteRepo, metaRepo));
-
-            NewSiteInfoVm = new NewSiteInfoViewModel(
-                new CreateSiteCommand(siteRepo, new UrlValidator()));
+                container.Resolve<IGetSiteQuery>());
+            NewSiteInfoVm = null;
         }
     }
 }

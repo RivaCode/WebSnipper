@@ -41,7 +41,7 @@
                 <Setter Property="Height" Value="80" />
             </Style>
 
-            <DataTemplate
+            <!--<DataTemplate
                 x:Key="AddCard"
                 DataType="{x:Type viewModels:SiteViewModel}">
 
@@ -56,9 +56,9 @@
 
                 </md:Card>
 
-            </DataTemplate>
+            </DataTemplate>-->
 
-            <DataTemplate
+            <!--<DataTemplate
                 x:Key="SiteCard"
                 DataType="{x:Type viewModels:SiteViewModel}">
 
@@ -76,7 +76,7 @@
 
                 </md:Card>
 
-            </DataTemplate>
+            </DataTemplate>-->
 
             <local:SiteDataTemplateSelector
                 x:Key="SiteDataTemplateSelector"

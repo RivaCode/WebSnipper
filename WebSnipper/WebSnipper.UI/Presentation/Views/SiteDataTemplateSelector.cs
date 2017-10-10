@@ -11,10 +11,10 @@ namespace WebSnipper.UI.Presentation.Views
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is SiteViewModel svm && !svm.IsSelectable)
-            {
-                return AddCard;
-            }
+            //if (item is SiteViewModel svm && !svm.IsSelectable)
+            //{
+            //    return AddCard;
+            //}
             return SiteCard;
         }
     }
