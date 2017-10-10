@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories
         }
 
         public IObservable<JToken> ObserveSlicedChangesUsing(StoreKey node) 
-            => _rootStream.Select(root => root[node]);
+            => _rootStream.Select(root => root[node.ToString()]);
 
         public async Task SaveAsync(StoreKey key, Action<JToken> changeJson)
         {
@@ -57,6 +57,7 @@ namespace Infrastructure.Repositories
             using (var streamWriter = new StreamWriter(PathUtil.GetFileStream()))
             using (var jsonWriter = new JsonTextWriter(streamWriter))
             {
+                jsonWriter.Formatting = Formatting.Indented;
                 await root.WriteToAsync(jsonWriter);
             }
         }
