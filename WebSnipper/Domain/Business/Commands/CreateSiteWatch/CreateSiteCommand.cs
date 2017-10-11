@@ -16,7 +16,7 @@ namespace Domain.Business
         public async Task Execute(CreateSiteModel entity)
         {
             Website site = new Website(
-                new UrlHolder(), 
+                new UrlHolder(entity.Url), 
                 new PageProperties(
                     entity.Name, DateTime.Now, 
                     Option.Some(entity.Description).NotNull()));

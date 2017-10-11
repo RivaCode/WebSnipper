@@ -42,6 +42,12 @@
     <Reference Include="FakeItEasy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <HintPath>..\packages\FakeItEasy.4.1.0\lib\net45\FakeItEasy.dll</HintPath>
     </Reference>
+    <Reference Include="FluentAssertions, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.4\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.4\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Optional, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Optional.3.2.0\lib\net462\Optional.dll</HintPath>
     </Reference>
@@ -63,6 +69,8 @@
       <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
@@ -84,6 +92,7 @@
     <Compile Include="Business\Interfaces\IRepository.cs" />
     <Compile Include="Business\Interfaces\IWebsiteRepository.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\GetSiteQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteWatch\GetSiteQueryTests.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\IGetSiteQuery.cs" />
     <Compile Include="Business\Queries\GetSiteWatch\SiteModel.cs" />
     <Compile Include="Core\ICoreCommand.cs" />

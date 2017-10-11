@@ -11,7 +11,7 @@ namespace Infrastructure.Converters
         public DomainModel.Website ToModel(WebSite persisted)
         {
             return new DomainModel.Website(
-                new DomainModel.UrlHolder(), 
+                new DomainModel.UrlHolder(persisted.Url), 
                 new DomainModel.PageProperties(
                     persisted.Name,
                     persisted.ScannedAt,
