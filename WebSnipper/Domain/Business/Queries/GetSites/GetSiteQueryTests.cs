@@ -28,26 +28,17 @@ namespace Domain.Business
                         () => repository.GetAllAsync())
                     .Returns(new List<Website> {websiteItem});
 
-                SiteModel actual = null;
+                SlimSiteModel actual = null;
                 sud.Execute().Subscribe(result => actual = result);
 
-                SiteModel expected = new SiteModel
+                SlimSiteModel expected = new SlimSiteModel
                 {
-                    Description = null,
-                    Url = websiteItem.UrlHolder.Url.ToString(),
                     Name = websiteItem.Properties.Name
                 };
 
                 actual.Should().NotBeNull();
-
-                actual.Url.Should().NotBeNullOrWhiteSpace()
-                    .And.StartWith("http")
-                    .And.BeEquivalentTo(expected.Url);
-
                 actual.Name.Should().NotBeNullOrWhiteSpace()
                     .And.BeEquivalentTo(expected.Name);
-
-                actual.Description.Should().Be(expected.Description);
             }
         }
     }

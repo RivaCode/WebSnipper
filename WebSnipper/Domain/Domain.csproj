@@ -91,10 +91,10 @@
     <Compile Include="Business\Commands\CreateSiteWatch\ICreateSiteCommand.cs" />
     <Compile Include="Business\Interfaces\IRepository.cs" />
     <Compile Include="Business\Interfaces\IWebsiteRepository.cs" />
-    <Compile Include="Business\Queries\GetSiteWatch\GetSiteQuery.cs" />
-    <Compile Include="Business\Queries\GetSiteWatch\GetSiteQueryTests.cs" />
-    <Compile Include="Business\Queries\GetSiteWatch\IGetSiteQuery.cs" />
-    <Compile Include="Business\Queries\GetSiteWatch\SiteModel.cs" />
+    <Compile Include="Business\Queries\GetSites\GetSiteQuery.cs" />
+    <Compile Include="Business\Queries\GetSites\GetSiteQueryTests.cs" />
+    <Compile Include="Business\Queries\GetSites\IGetSiteQuery.cs" />
+    <Compile Include="Business\Queries\GetSites\SiteModel.cs" />
     <Compile Include="Core\ICoreCommand.cs" />
     <Compile Include="Core\ICoreQuery.cs" />
     <Compile Include="DomainModule.cs" />

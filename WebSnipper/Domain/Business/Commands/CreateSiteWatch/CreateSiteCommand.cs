@@ -14,14 +14,13 @@ namespace Domain.Business
             => _siteRepository = siteRepository;
 
         public async Task Execute(CreateSiteModel entity)
-        {
-            Website site = new Website(
-                new UrlHolder(entity.Url), 
-                new PageProperties(
-                    entity.Name, DateTime.Now, 
-                    Option.Some(entity.Description).NotNull()));
-
-            await _siteRepository.AddAsync(site);
-        }
+            => await _siteRepository.AddAsync(new Website(
+                    new UrlHolder(entity.Url),
+                    new PageProperties(
+                        entity.Name, DateTime.Now,
+                        Option.Some(entity.Description).NotNull()
+                    )
+                )
+            );
     }
 }

@@ -3,7 +3,7 @@ using Domain.Core;
 
 namespace Domain.Business
 {
-    public interface IGetSiteQuery : ICoreQuery<IObservable<SiteModel>>
+    public interface IGetSiteQuery : ICoreQuery<IObservable<SlimSiteModel>>
     {
         
     }
