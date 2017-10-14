@@ -94,7 +94,7 @@
     <Compile Include="Business\Queries\GetSites\GetSiteQuery.cs" />
     <Compile Include="Business\Queries\GetSites\GetSiteQueryTests.cs" />
     <Compile Include="Business\Queries\GetSites\IGetSiteQuery.cs" />
-    <Compile Include="Business\Queries\GetSites\SiteModel.cs" />
+    <Compile Include="Business\Queries\GetSites\SlimSiteModel.cs" />
     <Compile Include="Core\ICoreCommand.cs" />
     <Compile Include="Core\ICoreQuery.cs" />
     <Compile Include="DomainModule.cs" />
