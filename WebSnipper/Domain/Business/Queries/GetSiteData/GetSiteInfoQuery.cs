@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Domain.Business.Interfaces;
 using Domain.Util;
