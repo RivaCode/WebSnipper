@@ -91,6 +91,9 @@
     <Compile Include="Business\Commands\CreateSiteWatch\ICreateSiteCommand.cs" />
     <Compile Include="Business\Interfaces\IRepository.cs" />
     <Compile Include="Business\Interfaces\IWebsiteRepository.cs" />
+    <Compile Include="Business\Queries\GetSiteData\GetSiteInfoQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteData\IGetSiteInfoQuery.cs" />
+    <Compile Include="Business\Queries\GetSiteData\SiteInfoModel.cs" />
     <Compile Include="Business\Queries\GetSites\GetSiteQuery.cs" />
     <Compile Include="Business\Queries\GetSites\GetSiteQueryTests.cs" />
     <Compile Include="Business\Queries\GetSites\IGetSiteQuery.cs" />

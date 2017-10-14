@@ -25,12 +25,9 @@ namespace Domain.Business
         }
 
         public IObservable<SlimSiteModel> Execute()
-            => _siteRepository.GetAllAsync().ToObservable()
-                .SelectMany(allWebsites => allWebsites.Select((website, index) => new {website, index}))
-                .SelectMany(websiteArgs => websiteArgs.website.DelayBy(websiteArgs.index + _delayBy, _scheduler))
-                .Select(website => new SlimSiteModel
-                {
-                    Name = website.Properties.Name,
-                });
+            => _siteRepository.GetAllAsync()
+                .ToObservable()
+                .DelayEachItemBy(_delayBy, _scheduler)
+                .Select(website => new SlimSiteModel { Name = website.Properties.Name });
     }
 }
