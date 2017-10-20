@@ -3,6 +3,7 @@ using System.IO;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Domain.Util;
 using Infrastructure.Core;
@@ -17,28 +18,29 @@ namespace Infrastructure.Repositories
         private IObservable<JObject> _rootStream;
         public JsonAdapterStore()
         {
-            var initialStream = Observable
-                .StartAsync(ct =>
-                {
-                    var newObject = new JObject(
-                        StoreKey.Settings.ToJProperty(
-                            new []{ StoreKey.RefreshRate.ToJProperty(TimeSpan.FromSeconds(15)) }),
-                        StoreKey.Sites.ToJProperty(new JArray()));
-
-                    return WriteRootAsync(newObject);
-                })
-                .SwitchSelect(
-                    () => ReadRootAsync().ToObservable()
-                        .Delay(TimeSpan.FromSeconds(1))
-                        .Retry(3));
-
             var continuesStream = JsonWatcher.Watch()
                 .Delay(TimeSpan.FromSeconds(3))
                 .SwitchSelect(() => ReadRootAsync());
 
             _rootStream = Observable
                 .StartAsync(_ => ReadRootAsync())
-                .Catch(initialStream)
+                .Catch((Exception e) =>
+                {
+                    return Observable
+                        .StartAsync(ct =>
+                        {
+                            var newObject = new JObject(
+                                StoreKey.Settings.ToJProperty(
+                                    new[] { StoreKey.RefreshRate.ToJProperty(TimeSpan.FromSeconds(15)) }),
+                                StoreKey.Sites.ToJProperty(new JArray()));
+
+                            return WriteRootAsync(newObject);
+                        })
+                        .SwitchSelect(
+                            () => ReadRootAsync().ToObservable()
+                                .Delay(TimeSpan.FromSeconds(1))
+                                .Retry(3));
+                })
                 .Concat(continuesStream);
         }
 
@@ -55,32 +57,26 @@ namespace Infrastructure.Repositories
 
         private async Task WriteRootAsync(JObject root)
         {
-            using (var streamWriter = new StreamWriter(PathUtil.GetFileStream()))
-            using (var jsonWriter = new JsonTextWriter(streamWriter))
+            using (var stream = new JsonTextWriter(
+                new StreamWriter(PathUtil.ObtainStorageFilePath())) {Formatting = Formatting.Indented})
             {
-                jsonWriter.Formatting = Formatting.Indented;
-                await root.WriteToAsync(jsonWriter);
+                await root.WriteToAsync(stream);
             }
         }
 
         private async Task<JObject> ReadRootAsync()
         {
-            using (var streamReader = new StreamReader(PathUtil.GetFileStream()))
-            using (var jsonReader = new JsonTextReader(streamReader))
+            using (var streamReader = new StreamReader(PathUtil.ObtainStorageFilePath()))
             {
-                return await JObject.LoadAsync(jsonReader);
+                string json = await streamReader.ReadToEndAsync();
+                return JObject.Parse(json);
             }
         }
 
         private static class PathUtil
         {
             private const string FILE_NAME = "watcher.json";
-
-            public static FileStream GetFileStream()
-                => new FileStream(
-                    ObtainStorageFilePath(),
-                    FileMode.OpenOrCreate, FileAccess.ReadWrite);
-
+            
             public static string ObtainStoragePath()
                 => Environment
                     .GetFolderPath(Environment.SpecialFolder.LocalApplicationData)

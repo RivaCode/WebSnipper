@@ -3,6 +3,7 @@ using Domain;
 using Domain.Business;
 using Infrastructure;
 using WebSnipper.UI.Core;
+using WebSnipper.UI.Presentation.SiteCatalog;
 using WebSnipper.UI.Presentation.ViewModels;
 
 namespace WebSnipper.UI

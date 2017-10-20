@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Domain.Business.Interfaces;
 using Domain.Util;
 using Infrastructure.Core;
 using Newtonsoft.Json.Linq;
+using Optional;
 
 namespace Infrastructure.Repositories
 {
@@ -33,13 +35,21 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<TModel>> GetAllAsync()
             => await _store.ObserveSlicedChangesUsing(MappingKey)
-                .SelectMany(rootStream => rootStream.Values<TPersistence>())
+                .Take(1)
+                .SelectMany(rootSlice => rootSlice.ToObject<TPersistence[]>())
                 .Aggregate(
                     new List<TModel>(),
                     (allModels, persisted)
                         => persisted.AsModel(_converter)
                             .Tee(model => _materializedObject[model] = persisted)
                             .Map(model => allModels.Tee(self => self.Add(model))));
+
+        public Task<Option<TModel>> TryFindById(string id)
+        {
+            var foundKvp = _materializedObject.FirstOrDefault(kvp => kvp.Value.Id == id);
+            return Task.FromResult(
+                foundKvp.Value != null ? Option.Some(foundKvp.Key) : Option.None<TModel>());
+        }
 
         public async Task AddAsync(TModel entity)
         {

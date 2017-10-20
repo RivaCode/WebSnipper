@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reactive.Linq;
@@ -23,6 +24,9 @@ namespace WebSnipper.UI.Presentation
             this IObservable<T> @src,
             Func<T, bool> ifCondition)
             => @src.Select(ifCondition);
+
+        public static IEnumerable<T> Expand<T>(this T src)
+            => new[] {src};
 
         public static async Task<Result> SafeInvokeAsync(
             this BusyViewModel src,

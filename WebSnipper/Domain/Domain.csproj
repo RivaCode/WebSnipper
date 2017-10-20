@@ -108,6 +108,7 @@
     <Compile Include="Models\Site\Website.cs" />
     <Compile Include="Models\ValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\EnumerableExtensions.cs" />
     <Compile Include="Util\FunctionalExtensions.cs" />
     <Compile Include="Util\ReactiveExtensions.cs" />
     <Compile Include="Util\ValidationExtensions.cs" />

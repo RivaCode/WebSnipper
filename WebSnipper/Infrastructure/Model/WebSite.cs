@@ -13,7 +13,7 @@ namespace Infrastructure.Model
         public string Url { get; set; }
 
         [JsonProperty(
-            Required = Required.Always,
+            //Required = Required.Always,
             PropertyName = "scanned"
         )]
         public DateTime ScannedAt { get; set; }

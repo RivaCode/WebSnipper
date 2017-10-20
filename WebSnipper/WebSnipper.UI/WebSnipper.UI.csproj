@@ -78,9 +78,10 @@
     <Compile Include="Presentation\BusyViewModel.cs" />
     <Compile Include="Presentation\Command.cs" />
     <Compile Include="Presentation\Result.cs" />
+    <Compile Include="Presentation\SiteCatalog\CardViewModel.cs" />
     <Compile Include="Presentation\ViewModelExtensions.cs" />
     <Compile Include="Presentation\ViewModels\NewSiteInfoViewModel.cs" />
-    <Compile Include="Presentation\ViewModels\SitesCatalogViewModel.cs" />
+    <Compile Include="Presentation\SiteCatalog\SitesCatalogViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,14 +96,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Presentation\Views\Sites.xaml">
+    <Page Include="Presentation\SiteCatalog\Sites.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presentation\Views\SiteDataTemplateSelector.cs" />
-    <Compile Include="Presentation\Views\Sites.xaml.cs">
+    <Compile Include="Presentation\SiteCatalog\Sites.xaml.cs">
       <DependentUpon>Sites.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\UrlValidationRule.cs" />

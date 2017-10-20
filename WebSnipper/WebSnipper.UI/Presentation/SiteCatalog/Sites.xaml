@@ -1,13 +1,12 @@
 ﻿<UserControl
-    x:Class="WebSnipper.UI.Presentation.Views.Sites"
+    x:Class="WebSnipper.UI.Presentation.SiteCatalog.Sites"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:WebSnipper.UI.Presentation.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:viewModels="clr-namespace:WebSnipper.UI.Presentation.ViewModels"
-    d:DataContext="{d:DesignInstance d:Type={x:Type viewModels:SitesCatalogViewModel}}"
+    xmlns:siteCatalog="clr-namespace:WebSnipper.UI.Presentation.SiteCatalog"
+    d:DataContext="{d:DesignInstance d:Type={x:Type siteCatalog:SitesCatalogViewModel}}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -28,10 +27,13 @@
 
     </UserControl.Resources>
 
-
     <Grid>
 
         <Grid.Resources>
+
+            <CollectionViewSource
+                x:Key="CardsSrc"
+                Source="{Binding Cards}" />
 
             <Style
                 x:Key="CardStyle"
@@ -41,53 +43,45 @@
                 <Setter Property="Height" Value="80" />
             </Style>
 
-            <!--<DataTemplate
-                x:Key="AddCard"
-                DataType="{x:Type viewModels:SiteViewModel}">
-
-                <md:Card Style="{StaticResource CardStyle}">
-
-                    <Button
-                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:Sites}}, Path=OpenSiteEditorCommand}"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
-                        ToolTip="{Binding Description}">
-                        <md:PackIcon Kind="Plus" />
-                    </Button>
-
-                </md:Card>
-
-            </DataTemplate>-->
-
-            <!--<DataTemplate
+            <DataTemplate
                 x:Key="SiteCard"
-                DataType="{x:Type viewModels:SiteViewModel}">
+                DataType="{x:Type siteCatalog:CardViewModel}">
 
                 <md:Card Style="{StaticResource CardStyle}">
 
-                    <StackPanel>
-                        <TextBlock
-                            Style="{StaticResource MaterialDesignTitleTextBlock}"
-                            Text="{Binding Description}">
-                            <Hyperlink
-                                NavigateUri="{Binding Url}"
-                                Style="{StaticResource MaterialDesignTitleHyperlink}" />
-                        </TextBlock>
-                    </StackPanel>
+                    <TextBlock
+                        Style="{StaticResource MaterialDesignTitleTextBlock}"
+                        Text="{Binding Name}" />
 
                 </md:Card>
 
-            </DataTemplate>-->
-
-            <local:SiteDataTemplateSelector
-                x:Key="SiteDataTemplateSelector"
-                AddCard="{StaticResource AddCard}"
-                SiteCard="{StaticResource SiteCard}" />
+            </DataTemplate>
 
         </Grid.Resources>
 
-        <ItemsControl
-            ItemTemplateSelector="{StaticResource SiteDataTemplateSelector}"
-            ItemsSource="{Binding Urls}">
+        <ItemsControl ItemTemplate="{StaticResource SiteCard}">
+
+            <ItemsControl.ItemsSource>
+
+                <CompositeCollection>
+
+                    <md:Card Style="{StaticResource CardStyle}">
+
+                        <Button
+                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type siteCatalog:Sites}}, Path=OpenSiteEditorCommand}"
+                            FocusVisualStyle="{x:Null}"
+                            Style="{StaticResource MaterialDesignRaisedLightButton}"
+                            ToolTip="Add new site">
+                            <md:PackIcon Kind="Plus" />
+                        </Button>
+
+                    </md:Card>
+
+                    <CollectionContainer Collection="{Binding Source={StaticResource CardsSrc}}" />
+
+                </CompositeCollection>
+
+            </ItemsControl.ItemsSource>
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
