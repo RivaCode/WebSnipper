@@ -2,17 +2,17 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WebSnipper.UI.Presentation.SiteCatalog
+namespace WebSnipper.UI.Presentation.SiteCards
 {
     /// <summary>
-    /// Interaction logic for Sites.xaml
+    /// Interaction logic for SiteCardsView.xaml
     /// </summary>
-    public partial class Sites : UserControl
+    public partial class SiteCardsView : UserControl
     {
         public static readonly DependencyProperty OpenSiteEditorCommandProperty = DependencyProperty.Register(
             nameof(OpenSiteEditorCommand), 
             typeof(ICommand), 
-            typeof(Sites));
+            typeof(SiteCardsView));
 
         public ICommand OpenSiteEditorCommand
         {
@@ -20,6 +20,6 @@ namespace WebSnipper.UI.Presentation.SiteCatalog
             set => SetValue(OpenSiteEditorCommandProperty, value);
         }
 
-        public Sites() => InitializeComponent();
+        public SiteCardsView() => InitializeComponent();
     }
 }

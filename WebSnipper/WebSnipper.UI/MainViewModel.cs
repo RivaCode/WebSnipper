@@ -3,14 +3,14 @@ using Domain;
 using Domain.Business;
 using Infrastructure;
 using WebSnipper.UI.Core;
-using WebSnipper.UI.Presentation.SiteCatalog;
+using WebSnipper.UI.Presentation.SiteCards;
 using WebSnipper.UI.Presentation.ViewModels;
 
 namespace WebSnipper.UI
 {
     public class MainViewModel : NotifyObject
     {
-        public SitesCatalogViewModel SitesCatalogVm { get; }
+        public SiteCardsViewModel SiteCardsVm { get; }
         public NewSiteInfoViewModel NewSiteInfoVm { get; }
 
         public MainViewModel()
@@ -21,7 +21,7 @@ namespace WebSnipper.UI
 
             var container = cb.Build();
 
-            SitesCatalogVm = new SitesCatalogViewModel(
+            SiteCardsVm = new SiteCardsViewModel(
                 container.Resolve<IGetSiteQuery>());
             NewSiteInfoVm = null;
         }

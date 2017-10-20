@@ -8,14 +8,14 @@ using Domain.Business;
 using Domain.Util;
 using WebSnipper.UI.Core;
 
-namespace WebSnipper.UI.Presentation.SiteCatalog
+namespace WebSnipper.UI.Presentation.SiteCards
 {
-    public class SitesCatalogViewModel : NotifyObject
+    public class SiteCardsViewModel : NotifyObject
     {
         public ObservableCollection<CardViewModel> Cards { get; }
             = new ObservableCollection<CardViewModel>();
 
-        public SitesCatalogViewModel(
+        public SiteCardsViewModel(
             IGetSiteQuery getSiteQuery,
             IScheduler scheduler = null)
         {

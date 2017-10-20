@@ -1,12 +1,12 @@
 ﻿<UserControl
-    x:Class="WebSnipper.UI.Presentation.SiteCatalog.Sites"
+    x:Class="WebSnipper.UI.Presentation.SiteCards.SiteCardsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:siteCatalog="clr-namespace:WebSnipper.UI.Presentation.SiteCatalog"
-    d:DataContext="{d:DesignInstance d:Type={x:Type siteCatalog:SitesCatalogViewModel}}"
+    xmlns:siteCatalog="clr-namespace:WebSnipper.UI.Presentation.SiteCards"
+    d:DataContext="{d:DesignInstance d:Type={x:Type siteCatalog:SiteCardsViewModel}}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -68,7 +68,7 @@
                     <md:Card Style="{StaticResource CardStyle}">
 
                         <Button
-                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type siteCatalog:Sites}}, Path=OpenSiteEditorCommand}"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type siteCatalog:SiteCardsView}}, Path=OpenSiteEditorCommand}"
                             FocusVisualStyle="{x:Null}"
                             Style="{StaticResource MaterialDesignRaisedLightButton}"
                             ToolTip="Add new site">

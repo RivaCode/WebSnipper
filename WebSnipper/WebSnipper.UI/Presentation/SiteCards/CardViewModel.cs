@@ -1,6 +1,6 @@
 ﻿using Domain.Business;
 
-namespace WebSnipper.UI.Presentation.SiteCatalog
+namespace WebSnipper.UI.Presentation.SiteCards
 {
     public class CardViewModel
     {

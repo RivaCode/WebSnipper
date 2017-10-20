@@ -5,9 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:siteCards="clr-namespace:WebSnipper.UI.Presentation.SiteCards"
+    xmlns:snipperHeader="clr-namespace:WebSnipper.UI.Presentation.SnipperHeader"
     xmlns:ui="clr-namespace:WebSnipper.UI"
     xmlns:views="clr-namespace:WebSnipper.UI.Presentation.Views"
-    xmlns:siteCatalog="clr-namespace:WebSnipper.UI.Presentation.SiteCatalog"
     Title="Snipper"
     Width="525"
     Height="350"
@@ -109,22 +110,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <md:ColorZone
-                Grid.Row="0"
-                Padding="16"
-                Mode="PrimaryMid">
-                
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="24"
-                    Text="Web pages snipper" />
-                
-            </md:ColorZone>
+            <snipperHeader:SnipperHeaderView Grid.Row="0" />
 
-            <siteCatalog:Sites
+            <siteCards:SiteCardsView
                 Grid.Row="1"
-                DataContext="{Binding SitesCatalogVm}"
+                DataContext="{Binding SiteCardsVm}"
                 OpenSiteEditorCommand="{x:Static md:DialogHost.OpenDialogCommand}" />
 
             <md:PopupBox
